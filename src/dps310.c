@@ -180,23 +180,23 @@ static DPS310_status_t _DPS310_read_calibration_coefficients(uint8_t i2c_address
 	c21 |= (coef_registers[14] << 8) | (coef_registers[15]);
 	c30 |= (coef_registers[16] << 8) | (coef_registers[17]);
 	// Convert to sign values.
-	math_status = MATH_two_complement_to_int32(c0, 11, &dps310_ctx.coef_c0);
+	math_status = MATH_two_complement_to_integer(c0, 11, &dps310_ctx.coef_c0);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c1, 11, &dps310_ctx.coef_c1);
+	math_status = MATH_two_complement_to_integer(c1, 11, &dps310_ctx.coef_c1);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c00, 19, &dps310_ctx.coef_c00);
+	math_status = MATH_two_complement_to_integer(c00, 19, &dps310_ctx.coef_c00);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c01, 15, &dps310_ctx.coef_c01);
+	math_status = MATH_two_complement_to_integer(c01, 15, &dps310_ctx.coef_c01);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c10, 19, &dps310_ctx.coef_c10);
+	math_status = MATH_two_complement_to_integer(c10, 19, &dps310_ctx.coef_c10);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c11, 15, &dps310_ctx.coef_c11);
+	math_status = MATH_two_complement_to_integer(c11, 15, &dps310_ctx.coef_c11);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c20, 15, &dps310_ctx.coef_c20);
+	math_status = MATH_two_complement_to_integer(c20, 15, &dps310_ctx.coef_c20);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c21, 15, &dps310_ctx.coef_c21);
+	math_status = MATH_two_complement_to_integer(c21, 15, &dps310_ctx.coef_c21);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
-	math_status = MATH_two_complement_to_int32(c30, 15, &dps310_ctx.coef_c30);
+	math_status = MATH_two_complement_to_integer(c30, 15, &dps310_ctx.coef_c30);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
 	// Set flag.
 	dps310_ctx.coef_ready_flag = 1;
@@ -236,7 +236,7 @@ static DPS310_status_t _DPS310_compute_raw_temperature(uint8_t i2c_address) {
 	if (status != DPS310_SUCCESS) goto errors;
 	tmp_raw |= read_byte;
 	// Compute two complement.
-	math_status = MATH_two_complement_to_int32(tmp_raw, 23, &dps310_ctx.tmp_raw);
+	math_status = MATH_two_complement_to_integer(tmp_raw, 23, &dps310_ctx.tmp_raw);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
 errors:
 	return status;
@@ -274,7 +274,7 @@ static DPS310_status_t _DPS310_compute_raw_pressure(uint8_t i2c_address) {
 	if (status != DPS310_SUCCESS) goto errors;
 	prs_raw |= read_byte;
 	// Compute two complement.
-	math_status = MATH_two_complement_to_int32(prs_raw, 23, &dps310_ctx.prs_raw);
+	math_status = MATH_two_complement_to_integer(prs_raw, 23, &dps310_ctx.prs_raw);
 	MATH_exit_error(DPS310_ERROR_BASE_MATH);
 errors:
 	return status;
@@ -308,7 +308,7 @@ errors:
 DPS310_status_t DPS310_get_pressure_temperature(uint8_t i2c_address, int32_t* pressure_pa, int32_t* temperature_degrees) {
 	// Local variables.
 	DPS310_status_t status = DPS310_SUCCESS;
-	int64_t temp_i64 = 0;
+	int64_t temp_s64 = 0;
 	int64_t last_term = 0;
 	// Check parameters.
 	if ((pressure_pa == NULL) || (temperature_degrees == NULL)) {
@@ -329,18 +329,18 @@ DPS310_status_t DPS310_get_pressure_temperature(uint8_t i2c_address, int32_t* pr
 		if (status != DPS310_SUCCESS) goto errors;
 	}
 	// Compute pressure in Pa.
-	temp_i64 = dps310_ctx.coef_c20 + (dps310_ctx.prs_raw * dps310_ctx.coef_c30) / DPS310_SAMPLING_FACTOR_KP;
-	temp_i64 = dps310_ctx.coef_c10 + (dps310_ctx.prs_raw * temp_i64) / DPS310_SAMPLING_FACTOR_KP;
-	temp_i64 = dps310_ctx.coef_c00 + (dps310_ctx.prs_raw * temp_i64) / DPS310_SAMPLING_FACTOR_KP;
-	temp_i64 += (dps310_ctx.tmp_raw * dps310_ctx.coef_c01) / DPS310_SAMPLING_FACTOR_KT;
+	temp_s64 = dps310_ctx.coef_c20 + (dps310_ctx.prs_raw * dps310_ctx.coef_c30) / DPS310_SAMPLING_FACTOR_KP;
+	temp_s64 = dps310_ctx.coef_c10 + (dps310_ctx.prs_raw * temp_s64) / DPS310_SAMPLING_FACTOR_KP;
+	temp_s64 = dps310_ctx.coef_c00 + (dps310_ctx.prs_raw * temp_s64) / DPS310_SAMPLING_FACTOR_KP;
+	temp_s64 += (dps310_ctx.tmp_raw * dps310_ctx.coef_c01) / DPS310_SAMPLING_FACTOR_KT;
 	last_term = dps310_ctx.coef_c11 + (dps310_ctx.prs_raw * dps310_ctx.coef_c21) / DPS310_SAMPLING_FACTOR_KP;
 	last_term = (dps310_ctx.prs_raw * last_term) / DPS310_SAMPLING_FACTOR_KP;
 	last_term = (dps310_ctx.tmp_raw * last_term) / DPS310_SAMPLING_FACTOR_KT;
-	temp_i64 += last_term;
-	(*pressure_pa) = (int32_t) temp_i64;
+	temp_s64 += last_term;
+	(*pressure_pa) = (int32_t) temp_s64;
 	// Compute temperature in degrees.
-	temp_i64 = (dps310_ctx.coef_c0 >> 1) + (dps310_ctx.coef_c1 * dps310_ctx.tmp_raw) / DPS310_SAMPLING_FACTOR_KT;
-	(*temperature_degrees) = (int32_t) temp_i64;
+	temp_s64 = (dps310_ctx.coef_c0 >> 1) + (dps310_ctx.coef_c1 * dps310_ctx.tmp_raw) / DPS310_SAMPLING_FACTOR_KT;
+	(*temperature_degrees) = (int32_t) temp_s64;
 errors:
 	return status;
 }
