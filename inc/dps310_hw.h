@@ -8,8 +8,13 @@
 #ifndef __DPS310_HW_H__
 #define __DPS310_HW_H__
 
+#ifndef DPS310_DRIVER_DISABLE_FLAGS_FILE
+#include "dps310_driver_flags.h"
+#endif
 #include "dps310.h"
 #include "types.h"
+
+#ifndef DPS310_DRIVER_DISABLE
 
 /*** DPS310 HW functions ***/
 
@@ -61,5 +66,7 @@ DPS310_status_t DPS310_HW_i2c_read(uint8_t i2c_address, uint8_t* data, uint8_t d
  * \retval		Function execution status.
  *******************************************************************/
 DPS310_status_t DPS310_HW_delay_milliseconds(uint32_t delay_ms);
+
+#endif /* DPS310_DRIVER_DISABLE */
 
 #endif /* __DPS310_HW_H__ */

@@ -7,8 +7,13 @@
 
 #include "dps310_hw.h"
 
+#ifndef DPS310_DRIVER_DISABLE_FLAGS_FILE
+#include "dps310_driver_flags.h"
+#endif
 #include "dps310.h"
 #include "types.h"
+
+#ifndef DPS310_DRIVER_DISABLE
 
 /*** DPS310 HW functions ***/
 
@@ -59,3 +64,5 @@ DPS310_status_t __attribute__((weak)) DPS310_HW_delay_milliseconds(uint32_t dela
 	UNUSED(delay_ms);
 	return status;
 }
+
+#endif /* DPS310_DRIVER_DISABLE */

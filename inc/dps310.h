@@ -36,6 +36,8 @@ typedef enum {
 	DPS310_ERROR_BASE_LAST = (DPS310_ERROR_BASE_MATH + MATH_ERROR_BASE_LAST)
 } DPS310_status_t;
 
+#ifndef DPS310_DRIVER_DISABLE
+
 /*** DPS310 functions ***/
 
 /*!******************************************************************
@@ -74,5 +76,7 @@ DPS310_status_t DPS310_get_pressure_temperature(uint8_t i2c_address, int32_t* pr
 
 /*******************************************************************/
 #define DPS310_stack_exit_error(base, code) { ERROR_check_stack_exit(dps310_status, DPS310_SUCCESS, base, code) }
+
+#endif /* DPS310_DRIVER_DISABLE */
 
 #endif /* __DPS310_H__ */
