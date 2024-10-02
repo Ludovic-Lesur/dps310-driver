@@ -10,7 +10,7 @@
 
 /*** DPS310 driver compilation flags ***/
 
-#define DPS310_DRIVER_I2C_ERROR_BASE_LAST		0
-#define DPS310_DRIVER_DELAY_ERROR_BASE_LAST		0
+#define DPS310_DRIVER_I2C_ERROR_BASE_LAST       0
+#define DPS310_DRIVER_DELAY_ERROR_BASE_LAST     0
 
 #endif /* __DPS310_DRIVER_FLAGS_H__ */
