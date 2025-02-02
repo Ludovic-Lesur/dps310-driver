@@ -11,7 +11,7 @@
 #ifndef DPS310_DRIVER_DISABLE_FLAGS_FILE
 #include "dps310_driver_flags.h"
 #endif
-#include "math.h"
+#include "maths.h"
 #include "types.h"
 
 /*** DPS310 structures ***/

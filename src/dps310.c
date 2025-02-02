@@ -12,7 +12,7 @@
 #endif
 #include "dps310_hw.h"
 #include "error.h"
-#include "math.h"
+#include "maths.h"
 #include "types.h"
 
 #ifndef DPS310_DRIVER_DISABLE
