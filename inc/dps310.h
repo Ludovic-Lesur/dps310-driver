@@ -11,6 +11,7 @@
 #ifndef DPS310_DRIVER_DISABLE_FLAGS_FILE
 #include "dps310_driver_flags.h"
 #endif
+#include "error.h"
 #include "maths.h"
 #include "types.h"
 
@@ -29,7 +30,7 @@ typedef enum {
     DPS310_ERROR_TEMPERATURE_TIMEOUT,
     DPS310_ERROR_PRESSURE_TIMEOUT,
     // Low level drivers errors.
-    DPS310_ERROR_BASE_I2C = 0x0100,
+    DPS310_ERROR_BASE_I2C = ERROR_BASE_STEP,
     DPS310_ERROR_BASE_DELAY = (DPS310_ERROR_BASE_I2C + DPS310_DRIVER_I2C_ERROR_BASE_LAST),
     DPS310_ERROR_BASE_MATH = (DPS310_ERROR_BASE_DELAY + DPS310_DRIVER_DELAY_ERROR_BASE_LAST),
     // Last base value.
