@@ -60,14 +60,14 @@ DPS310_status_t DPS310_init(void);
 DPS310_status_t DPS310_de_init(void);
 
 /*!******************************************************************
- * \fn DPS310_status_t DPS310_get_pressure_temperature(uint8_t i2c_address, int32_t* pressure_pa, int32_t* temperature_degrees)
+ * \fn DPS310_status_t DPS310_get_pressure_temperature(uint8_t i2c_address, int32_t* pressure_pa, int32_t* temperature_tenth_degrees)
  * \brief Perform pressure and temperature measurements.
  * \param[in]   i2c_address: I2C address of the sensor.
  * \param[out]  pressure_pa: Pointer to integer that will contain the atmospheric pressure in Pa.
- * \param[out]  temperature_degrees: Pointer to integer that will contain the temperature in Celsius degrees.
+ * \param[out]  temperature_tenth_degrees: Pointer to integer that will contain the temperature in 1/10 Celsius degrees.
  * \retval      Function execution status.
  *******************************************************************/
-DPS310_status_t DPS310_get_pressure_temperature(uint8_t i2c_address, int32_t* pressure_pa, int32_t* temperature_degrees);
+DPS310_status_t DPS310_get_pressure_temperature(uint8_t i2c_address, int32_t* pressure_pa, int32_t* temperature_tenth_degrees);
 
 /*******************************************************************/
 #define DPS310_exit_error(base) { ERROR_check_exit(dps310_status, DPS310_SUCCESS, base) }
