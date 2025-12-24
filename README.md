@@ -29,3 +29,20 @@ Here is the versions compatibility table:
 | `DPS310_DRIVER_DISABLE` | `defined` / `undefined` | Disable the DPS310 driver. |
 | `DPS310_DRIVER_I2C_ERROR_BASE_LAST` | `<value>` | Last error base of the low level I2C driver. |
 | `DPS310_DRIVER_DELAY_ERROR_BASE_LAST` | `<value>` | Last error base of the low level delay driver. |
+
+# Build
+
+A static library can be compiled by command line with `cmake`.
+
+```bash
+mkdir build
+cd build
+cmake -DCMAKE_TOOLCHAIN_FILE="<toolchain_file_path>" \
+      -DTOOLCHAIN_PATH="<arm-none-eabi-gcc_path>" \
+      -DTYPES_PATH="<types_file_path>" \
+      -DEMBEDDED_UTILS_PATH="<embedded-utils_path>" \
+      -DDPS310_DRIVER_I2C_ERROR_BASE_LAST=0 \
+      -DDPS310_DRIVER_DELAY_ERROR_BASE_LAST=0 \
+      -G "Unix Makefiles" ..
+make all
+```
