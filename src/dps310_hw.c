@@ -20,7 +20,7 @@
 /*******************************************************************/
 DPS310_status_t __attribute__((weak)) DPS310_HW_init(void) {
     // Local variables.
-    DPS310_status_t status = DPS310_SUCCESS;
+    DPS310_status_t status = DPS310_ERROR_HW_FUNCTION_NOT_IMPLEMENTED;
     /* To be implemented */
     return status;
 }
@@ -28,7 +28,7 @@ DPS310_status_t __attribute__((weak)) DPS310_HW_init(void) {
 /*******************************************************************/
 DPS310_status_t __attribute__((weak)) DPS310_HW_de_init(void) {
     // Local variables.
-    DPS310_status_t status = DPS310_SUCCESS;
+    DPS310_status_t status = DPS310_ERROR_HW_FUNCTION_NOT_IMPLEMENTED;
     /* To be implemented */
     return status;
 }
@@ -36,7 +36,7 @@ DPS310_status_t __attribute__((weak)) DPS310_HW_de_init(void) {
 /*******************************************************************/
 DPS310_status_t __attribute__((weak)) DPS310_HW_i2c_write(uint8_t i2c_address, uint8_t* data, uint8_t data_size_bytes, uint8_t stop_flag) {
     // Local variables.
-    DPS310_status_t status = DPS310_SUCCESS;
+    DPS310_status_t status = DPS310_ERROR_HW_FUNCTION_NOT_IMPLEMENTED;
     /* To be implemented */
     UNUSED(i2c_address);
     UNUSED(data);
@@ -48,7 +48,7 @@ DPS310_status_t __attribute__((weak)) DPS310_HW_i2c_write(uint8_t i2c_address, u
 /*******************************************************************/
 DPS310_status_t __attribute__((weak)) DPS310_HW_i2c_read(uint8_t i2c_address, uint8_t* data, uint8_t data_size_bytes) {
     // Local variables.
-    DPS310_status_t status = DPS310_SUCCESS;
+    DPS310_status_t status = DPS310_ERROR_HW_FUNCTION_NOT_IMPLEMENTED;
     /* To be implemented */
     UNUSED(i2c_address);
     UNUSED(data);
@@ -59,7 +59,7 @@ DPS310_status_t __attribute__((weak)) DPS310_HW_i2c_read(uint8_t i2c_address, ui
 /*******************************************************************/
 DPS310_status_t __attribute__((weak)) DPS310_HW_delay_milliseconds(uint32_t delay_ms) {
     // Local variables.
-    DPS310_status_t status = DPS310_SUCCESS;
+    DPS310_status_t status = DPS310_ERROR_HW_FUNCTION_NOT_IMPLEMENTED;
     /* To be implemented */
     UNUSED(delay_ms);
     return status;
